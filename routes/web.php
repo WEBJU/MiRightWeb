@@ -15,10 +15,18 @@ use Illuminate\Support\Facades\Route;
 
 // admin/article/view
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 //auth routes
-
+Route::get('/register',function(){
+  return view('register');
+});
+Route::get('/login',function(){
+  return view('login');
+});
+Route::post('/user/register',[App\Http\Controllers\UserController::class,'store'])->name('user.register');
+Route::post('/user/login',[App\Http\Controllers\UserController::class,'login'])->name('user.login');
+Route::get('/logout',[App\Http\Controllers\UserController::class,'logout'])->name('logout');
 //admin routes
 Route::get('/admin',[App\Http\Controllers\HomeController::class,'index']);
 //article routes

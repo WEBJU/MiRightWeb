@@ -28,10 +28,8 @@ class ApiController extends Controller
         $articles=Articles::all();
         // $interpretation=$articles->interpretations;
         return response()->json([
-          'success'=>true,
-          'data'=>[
-            'articles'=>$articles
-          ]
+           'success'=>true,
+           'articles'=>$articles
         ]);
     }
 
@@ -81,7 +79,25 @@ class ApiController extends Controller
           ]
         ]);
     }
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function content()
+    {
+        //
+        $contents=Content::all();
+        // $provisions=$article->provisions;
+        // $interpretations=$article->interpretations;
+        // $remedies=$article->remedies;
+        // $scenarios=$article->scenarios;
+        return response()->json([
+          'success'=>true,
+          'contents'=>$contents,
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -111,12 +127,12 @@ class ApiController extends Controller
       * @return \Illuminate\Http\Response
     */
     public function register(Request $request){
-      $validator=Validator::make($request->all(),
+      $validator=Validator::make($request->all(),[
         'name'=>'required|string|max:255',
         'email'=>'required|email|max:255|unique:users',
         'username'=>'required|max:20',
         'password'=>'required|string|min:6',
-      );
+      ]);
       if ($validator->fails()) {
         // code...
         return response(['errors'=>$validator->errors()->all()],422);
@@ -180,4 +196,14 @@ class ApiController extends Controller
     {
         //
     }
+
+    public function search($title){
+      $result=Content::where('title','LIKE','%'.$name.'%')->get();
+      if (count($result) > 0) {
+          return response()->json($result);
+      }else {
+        return response()->json(['result'=>'No data found']);
+      }
+    }
+
 }

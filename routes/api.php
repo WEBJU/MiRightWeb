@@ -22,6 +22,8 @@ Route::get('/articles',[App\Http\Controllers\ApiController::class,'index']);
 //content api
 Route::get('article/provision/{id}',[App\Http\Controllers\ApiController::class,'show']);
 
+Route::get('/content',[App\Http\Controllers\ApiController::class,'content']);
+Route::get('/search/{name}',[App\Http\Controllers\ApiController::class,'search']);
 // Route::middleware(['middleware'=>['cors','json.response']], function (Request $request) {
 //     // return $request->user();
 //     // public routes
